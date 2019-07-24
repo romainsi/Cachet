@@ -57,13 +57,7 @@ class StatusPageController extends AbstractApiController
 
         if ($onlyDisruptedDays) {
             // In this case, start_date GET parameter means the page
-            $page = Binput::get('start_date', 0);
-
-            if (!is_numeric($page)) {
-                $page = 0;
-            }
-
-            $page = (int) $page;
+            $page = (int) Binput::get('start_date', 0);
 
             $allIncidentDays = Incident::where('visible', '>=', (int) !Auth::check())
                                        ->select('occurred_at')
@@ -80,7 +74,7 @@ class StatusPageController extends AbstractApiController
                                       ->values();
 
             $numIncidentDays = count($allIncidentDays);
-            $numPages = round($numIncidentDays / $appIncidentDays);
+            $numPages = round($numIncidentDays / max($appIncidentDays, 1));
 
             $selectedDays = $allIncidentDays->slice($page * $appIncidentDays, $appIncidentDays)->all();
 
@@ -98,11 +92,12 @@ class StatusPageController extends AbstractApiController
 
             $canPageForward = (bool) $startDate->lt($date->sub('1 day'));
             $canPageBackward = Incident::where('occurred_at', '<', $date->format('Y-m-d'))->count() > 0;
-            $previousDate = $date->copy()->subDays($appIncidentDays)->toDateString();
-            $nextDate = $date->copy()->addDays($appIncidentDays)->toDateString();
+            $previousDate = $startDate->copy()->subDays($appIncidentDays)->toDateString();
+            $nextDate = $startDate->copy()->addDays($appIncidentDays)->toDateString();
         }
 
-        $allIncidents = Incident::where('visible', '>=', (int) !Auth::check())->whereBetween('occurred_at', [
+        $allIncidents = Incident::with('component', 'updates.incident')
+            ->where('visible', '>=', (int) !Auth::check())->whereBetween('occurred_at', [
             $endDate->format('Y-m-d').' 00:00:00',
             $startDate->format('Y-m-d').' 23:59:59',
         ])->orderBy('occurred_at', 'desc')->get()->groupBy(function (Incident $incident) {

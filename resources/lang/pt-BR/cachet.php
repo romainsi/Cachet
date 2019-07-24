@@ -23,6 +23,8 @@ return [
         'group' => [
             'other' => 'Outros componentes',
         ],
+        'select_all'   => 'Marcar todos',
+        'deselect_all' => 'Desmarcar todos',
     ],
 
     // Incidents
@@ -53,9 +55,9 @@ return [
 
     // Service Status
     'service' => [
-        'good'  => '[0,1]System operational|[2,*]All systems are operational',
-        'bad'   => '[0,1] O sistema encontra-se com alguns problemas|[2,*] Alguns sistemas estão com problemas',
-        'major' => '[0,1]O sistema encontra-se com uma falha geral|[2,*]Alguns sistemas encontram-se com falhas gerais',
+        'good'  => '[0,1] Sistema operacional | [2, *] Todos os sistemas estão operacionais',
+        'bad'   => '[0,1] O sistema apresenta falhas|[2,*] Alguns sistemas apresentam falhas',
+        'major' => '[0,1] O sistema apresenta falhas críticas|[2,Inf] Alguns sistemas apresentam falhas críticas',
     ],
 
     'api' => [
@@ -75,13 +77,17 @@ return [
 
     // Subscriber
     'subscriber' => [
-        'subscribe'   => 'Inscreva-se para obter as atualizações mais recentes',
-        'unsubscribe' => 'Cancelar inscrição em: link',
-        'button'      => 'Inscreva-se',
-        'manage'      => [
-            'no_subscriptions' => 'Você está atualmente inscrito a todas as atualizações.',
-            'my_subscriptions' => 'Você está atualmente inscrito para as seguintes atualizações.',
-            'manage_at_link'   => 'Edite as suas subscrições aqui :link',
+        'subscribe'           => 'Inscreva-se para mudanças de status e atualizações de incidentes',
+        'unsubscribe'         => 'Cancelar inscrição',
+        'button'              => 'Inscreva-se',
+        'manage_subscription' => 'Gerenciar inscrição',
+        'manage'              => [
+            'notifications'       => 'Notificações',
+            'notifications_for'   => 'Gerenciar notificações',
+            'no_subscriptions'    => 'Você está atualmente inscrito a todas as atualizações.',
+            'update_subscription' => 'Atualizar inscrição',
+            'my_subscriptions'    => 'Você está atualmente inscrito para as seguintes atualizações.',
+            'manage_at_link'      => 'Gerencie suas inscrições aqui :link',
         ],
         'email' => [
             'subscribe'          => 'Inscreva-se para atualizações via e-mail.',
@@ -121,9 +127,9 @@ return [
     // Meta descriptions
     'meta' => [
         'description' => [
-            'incident'  => 'Detalhes e atualizações sobre: ​​incidente de nome que ocorreu em: data',
-            'schedule'  => 'Detalhes sobre o período de manutenção programada: nome começando: startDate',
-            'subscribe' => 'Inscrever-se: app para receber atualizações de incidentes e períodos de manutenção programada',
+            'incident'  => 'Detalhes e atualizações sobre o ​​incidente :name ocorrido em :date',
+            'schedule'  => 'Detalhes sobre o período de manutenção agendada :name que começa em :startDate',
+            'subscribe' => 'Inscreva-se para o :app e receba atualizações de incidentes e períodos de manutenção agendada',
             'overview'  => 'Mantenha-se atualizado com as últimas atualizações de serviço de: app.',
         ],
     ],
